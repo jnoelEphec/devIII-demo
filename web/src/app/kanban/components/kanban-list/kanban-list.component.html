@@ -1,0 +1,8 @@
+<div class="kanban-list">
+  <div class="list-title">{{ list.title }}</div>
+  <app-kanban-card
+    *ngFor="let card of list.cards"
+    [card]="card"
+  ></app-kanban-card>
+  <button mat-raised-button (click)="addCard()">Add a card</button>
+</div>

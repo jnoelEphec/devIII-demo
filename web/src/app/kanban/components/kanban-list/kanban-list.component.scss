@@ -1,0 +1,45 @@
+.kanban-list {
+  border-radius: 3px;
+  margin: 0 10px;
+  width: 272px;
+  display: inline-block;
+  vertical-align: top;
+  white-space: normal;
+  background-color: white;
+  border-radius: 5px;
+  padding: 1em;
+  min-height: 100%;
+
+  .list-header {
+    padding: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .list-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .cards-container {
+    min-height: 10px;
+    margin-bottom: 8px;
+  }
+
+  .add-card-button {
+    padding: 8px 10px;
+    background: #ffffff;
+    border: none;
+    border-radius: 3px;
+    color: #5e6c84;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    &:hover {
+      background-color: #cdd2d4;
+      text-decoration: underline;
+    }
+  }
+}
