@@ -19,7 +19,7 @@ mongoose.connection.on("connected", () => {
   console.log("Mongoose connected to DB.");
 });
 
-mongoose.connection.on("error", (error) => {
+mongoose.connection.on("error", (error: any) => {
   console.log(`Mongoose connection error: ${error}`);
   mongoose.disconnect();
 });
@@ -36,4 +36,4 @@ process.on("SIGINT", () => {
   });
 });
 
-module.exports = connectDatabase;
+export default connectDatabase;

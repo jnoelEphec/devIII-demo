@@ -1,18 +1,18 @@
-const express = require("express");
+import express, { Request, Response } from 'express';
 const router = express.Router();
 const User = require("../databases/mongodb/entities/user");
 
 // Création d'un utilisateur
 // #swagger.tags = ['Users']
 // #swagger.description = 'Creates a new user'
-router.post("/", async (req, res) => {
+router.post("/", async (req: Request, res: Response) => {
   // #swagger.responses[201] = { description: 'User created.' }
   // #swagger.responses[400] = { description: 'Invalid data provided.' }
   try {
     const user = new User(req.body);
     const savedUser = await user.save();
     res.status(201).json(savedUser);
-  } catch (error) {
+  } catch (error : any) {
     res.status(400).json({ message: error.message });
   }
 });
@@ -20,12 +20,12 @@ router.post("/", async (req, res) => {
 // Récupération de tous les utilisateurs
 // #swagger.tags = ['Users']
 // #swagger.description = 'Returns a list of users'
-router.get("/", async (req, res) => {
+router.get("/", async (req: Request, res: Response) => {
   // #swagger.responses[200] = { description: 'List of users.' }
   try {
     const users = await User.find();
     res.json(users);
-  } catch (error) {
+  } catch (error : any) {
     res.status(500).json({ message: error.message });
   }
 });
@@ -33,7 +33,7 @@ router.get("/", async (req, res) => {
 // Récupération d'un utilisateur spécifique
 // #swagger.tags = ['Users']
 // #swagger.description = 'Returns details of a specific user'
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req: Request, res: Response) => {
   // #swagger.responses[200] = { description: 'User details.' }
   // #swagger.responses[404] = { description: 'User not found.' }
   try {
@@ -43,7 +43,7 @@ router.get("/:id", async (req, res) => {
     } else {
       res.status(404).json({ message: "User not found" });
     }
-  } catch (error) {
+  } catch (error : any) {
     res.status(500).json({ message: error.message });
   }
 });
@@ -51,7 +51,7 @@ router.get("/:id", async (req, res) => {
 // Mise à jour d'un utilisateur
 // #swagger.tags = ['Users']
 // #swagger.description = 'Updates a specific user'
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req: Request, res: Response) => {
   // #swagger.responses[200] = { description: 'User updated.' }
   // #swagger.responses[400] = { description: 'Invalid data provided.' }
   // #swagger.responses[404] = { description: 'User not found.' }
@@ -64,7 +64,7 @@ router.put("/:id", async (req, res) => {
     } else {
       res.status(404).json({ message: "User not found" });
     }
-  } catch (error) {
+  } catch (error : any) {
     res.status(400).json({ message: error.message });
   }
 });
@@ -72,7 +72,7 @@ router.put("/:id", async (req, res) => {
 // Suppression d'un utilisateur
 // #swagger.tags = ['Users']
 // #swagger.description = 'Deletes a specific user'
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req: Request, res: Response) => {
   // #swagger.responses[204] = { description: 'User deleted.' }
   // #swagger.responses[404] = { description: 'User not found.' }
   try {
@@ -82,9 +82,9 @@ router.delete("/:id", async (req, res) => {
     } else {
       res.status(404).json({ message: "User not found" });
     }
-  } catch (error) {
+  } catch (error : any) {
     res.status(500).json({ message: error.message });
   }
 });
 
-module.exports = router;
+export default router;

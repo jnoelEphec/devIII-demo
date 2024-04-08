@@ -1,11 +1,11 @@
-const express = require("express");
+import express, { Request, Response } from 'express';
 const router = express.Router();
-const kanbanCard = require("../databases/mongodb/entities/kanbanCard");
+const KanbanCard = require('../databases/mongodb/entities/kanbanCard');
 
 // Création d'une carte Kanban
 // #swagger.tags = ['Kanban']
 // #swagger.description = 'Creates a new Kanban card'
-router.post("/cards", async (req, res) => {
+router.post("/cards", async (req: Request, res: Response) => {
   // #swagger.responses[201] = { description: 'Kanban card created.' }
   // #swagger.responses[400] = { description: 'Invalid data provided.' }
 
@@ -13,7 +13,7 @@ router.post("/cards", async (req, res) => {
     const card = new KanbanCard(req.body);
     const savedCard = await card.save();
     res.status(201).json(savedCard);
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({ message: error.message });
   }
 });
@@ -21,13 +21,13 @@ router.post("/cards", async (req, res) => {
 // Récupération de toutes les cartes Kanban
 // #swagger.tags = ['Kanban']
 // #swagger.description = 'Returns a list of Kanban cards'
-router.get("/cards", async (req, res) => {
+router.get("/cards", async (req: Request, res: Response) => {
   // #swagger.responses[200] = { description: 'List of Kanban cards.' }
   // Logique pour récupérer toutes les cartes Kanban
   try {
     const cards = await KanbanCard.find();
     res.json(cards);
-  } catch (error) {
+  } catch (error : any) {
     res.status(500).json({ message: error.message });
   }
 });
@@ -35,7 +35,7 @@ router.get("/cards", async (req, res) => {
 // Récupération d'une carte Kanban spécifique
 // #swagger.tags = ['Kanban']
 // #swagger.description = 'Returns details of a specific Kanban card'
-router.get("/cards/:id", async (req, res) => {
+router.get("/cards/:id", async (req: Request, res: Response) => {
   // #swagger.responses[200] = { description: 'Kanban card details.' }
   // #swagger.responses[404] = { description: 'Kanban card not found.' }
   try {
@@ -45,14 +45,14 @@ router.get("/cards/:id", async (req, res) => {
     } else {
       res.status(404).json({ message: "Card not found" });
     }
-  } catch (error) {
+  } catch (error : any) {
     res.status(500).json({ message: error.message });
   }
 });
 // Mise à jour d'une carte Kanban
 // #swagger.tags = ['Kanban']
 // #swagger.description = 'Updates a specific Kanban card'
-router.put("/cards/:id", async (req, res) => {
+router.put("/cards/:id", async (req: Request, res: Response) => {
   // #swagger.responses[200] = { description: 'Kanban card updated.' }
   // #swagger.responses[400] = { description: 'Invalid data provided.' }
   // #swagger.responses[404] = { description: 'Kanban card not found.' }
@@ -65,7 +65,7 @@ router.put("/cards/:id", async (req, res) => {
     } else {
       res.status(404).json({ message: "Card not found" });
     }
-  } catch (error) {
+  } catch (error : any) {
     res.status(400).json({ message: error.message });
   }
 });
@@ -73,7 +73,7 @@ router.put("/cards/:id", async (req, res) => {
 // Suppression d'une carte Kanban
 // #swagger.tags = ['Kanban']
 // #swagger.description = 'Deletes a specific Kanban card'
-router.delete("/cards/:id", async (req, res) => {
+router.delete("/cards/:id", async (req: Request, res: Response) => {
   // #swagger.responses[204] = { description: 'Kanban card deleted.' }
   // #swagger.responses[404] = { description: 'Kanban card not found.' }
   try {
@@ -83,9 +83,9 @@ router.delete("/cards/:id", async (req, res) => {
     } else {
       res.status(404).json({ message: "Card not found" });
     }
-  } catch (error) {
+  } catch (error : any) {
     res.status(500).json({ message: error.message });
   }
 });
 
-module.exports = router;
+export default router;

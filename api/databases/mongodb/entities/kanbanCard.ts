@@ -31,4 +31,4 @@ const kanbanCardSchema = new mongoose.Schema(
 
 const KanbanCard = mongoose.model("KanbanCard", kanbanCardSchema);
 
-module.exports = KanbanCard;
+export default KanbanCard;
