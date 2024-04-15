@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import authenticateJWT from './middleware/authenticateJWT';
 import createError from 'http-errors';
@@ -11,6 +12,7 @@ import indexRouter from'./routes/index';
 import usersRouter from'./routes/users';
 import kanbanRouter from'./routes/kanban';
 import connectDatabase from "./databases/mongodb/connector";
+import authRouter from './routes/auth';
 
 
 const app = express();
@@ -25,11 +27,17 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors({
+    origin:'*',
+    credentials:true
+}));
+
 
 app.use('/', indexRouter);
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/kanban', authenticateJWT, kanbanRouter);
+app.use('/api/kanban', authenticateJWT, kanbanRouter); 
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {

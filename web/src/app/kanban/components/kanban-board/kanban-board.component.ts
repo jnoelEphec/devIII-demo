@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CardList } from '../../models/card-list';
+import { ListService } from 'src/app/services/list.service';
 
 @Component({
   selector: 'app-kanban-board',
@@ -9,7 +10,7 @@ import { CardList } from '../../models/card-list';
 export class KanbanBoardComponent implements OnInit {
   lists: Array<CardList> = [];
 
-  constructor() {}
+  constructor(private listService: ListService) {}
 
   ngOnInit(): void {
     this.loadLists();
@@ -31,26 +32,33 @@ export class KanbanBoardComponent implements OnInit {
   loadLists(): void {
     // [API Part]
     // Service pour récupérer les données
-    // this.lists = this.listService.getLists();
+    this.listService.getLists().subscribe({
+      next: (data) => {
+        this.lists = data;
+      },
+      error: (error) => {
+        console.error('Error fetching Kanban lists:', error);
+      }
+    });
 
     // [Base Part]
     // Exemple de données statiques (hardcoded)
-    this.lists = [
-      {
-        id: 1,
-        title: 'To Do',
-        cards: [{ content: 'Task 1' }],
-      },
-      {
-        id: 2,
-        title: 'In Progress',
-        cards: [{ content: 'Task 2' }],
-      },
-      {
-        id: 3,
-        title: 'Done',
-        cards: [{ content: 'Task 3' }],
-      },
-    ];
+    // this.lists = [
+    //   {
+    //     id: 1,
+    //     title: 'To Do',
+    //     cards: [{ content: 'Task 1' }],
+    //   },
+    //   {
+    //     id: 2,
+    //     title: 'In Progress',
+    //     cards: [{ content: 'Task 2' }],
+    //   },
+    //   {
+    //     id: 3,
+    //     title: 'Done',
+    //     cards: [{ content: 'Task 3' }],
+    //   },
+    // ];
   }
 }

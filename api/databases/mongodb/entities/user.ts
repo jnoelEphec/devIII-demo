@@ -1,27 +1,25 @@
-const mongoose = require("mongoose");
+import mongoose, { Document, Schema } from 'mongoose';
+const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema(
-  {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      // Dans un cas réel, le mot de passe devrait être hashé
-      type: String,
-      required: true,
-    },
-    // Ajoutez d'autres champs si nécessaire dans votre app
-  },
-  { timestamps: true }
-);
+export interface IUser extends Document {
+  username: string;
+  password: string;
+  email: string;
+}
 
-const User = mongoose.model("User", userSchema);
+const userSchema: Schema = new Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  email: { type: String, required: true, unique: true }
+});
+
+userSchema.pre<IUser>('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+
+
+export const User = mongoose.model<IUser>('User', userSchema);
 
 export default User;

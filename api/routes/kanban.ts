@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 const router = express.Router();
-const KanbanCard = require('../databases/mongodb/entities/kanbanCard');
+import KanbanCard from '../databases/mongodb/entities/kanbanCard';
 
 // Création d'une carte Kanban
 // #swagger.tags = ['Kanban']

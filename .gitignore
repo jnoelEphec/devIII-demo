@@ -3,6 +3,7 @@
 .vscode
 .idea
 .angular
+.env
 
 # Compiled output
 dist
